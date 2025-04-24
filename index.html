@@ -3,111 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piling Works Progress</title>
+    <title>Piling Progress by ID Matching</title>
     <style>
-        #map-container {
+        .container {
             position: relative;
             width: 100%;
-            height: 80vh;
-            overflow: hidden;
-            border: 1px solid #ccc;
+            overflow: auto;
         }
-        #drawing-background {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+        #drawing-container {
+            position: relative;
+            display: inline-block;
         }
-        .pile-marker {
+        #drawing-img {
+            max-width: 100%;
+            height: auto;
+        }
+        .pile-highlight {
             position: absolute;
-            width: 24px;
-            height: 24px;
+            border: 3px solid;
             border-radius: 50%;
+            width: 30px;
+            height: 30px;
             transform: translate(-50%, -50%);
-            border: 2px solid white;
-            box-shadow: 0 0 5px rgba(0,0,0,0.5);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
             font-weight: bold;
-            font-size: 10px;
-            cursor: pointer;
+            color: white;
+            text-shadow: 0 0 3px black;
         }
-        .completed { background-color: #4CAF50; }
-        .ongoing { background-color: #FFC107; }
-        .pending { background-color: #F44336; }
-        .pile-info {
-            position: absolute;
-            background: white;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            display: none;
-            z-index: 100;
-            min-width: 120px;
-        }
-        #legend {
-            margin: 20px 0;
-            display: flex;
-            gap: 20px;
-        }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 1px solid #999;
-        }
+        .status-completed { border-color: green; background-color: rgba(0, 255, 0, 0.3); }
+        .status-ongoing { border-color: yellow; background-color: rgba(255, 255, 0, 0.3); }
+        .status-pending { border-color: red; background-color: rgba(255, 0, 0, 0.3); }
         #controls {
-            margin: 10px 0;
+            margin: 20px 0;
         }
-        #loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255,255,255,0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
+        #search-box {
+            padding: 8px;
+            width: 200px;
         }
     </style>
 </head>
 <body>
-    <div id="loading">Loading piling data...</div>
-    
-    <h1>Piling Works Progress</h1>
+    <h1>Piling Progress by ID Matching</h1>
     <div id="controls">
+        <input type="text" id="search-box" placeholder="Search pile ID...">
         <button id="refresh-btn">Refresh Data</button>
     </div>
-    <div id="legend">
-        <div class="legend-item">
-            <div class="legend-color" style="background-color: #4CAF50;"></div>
-            <span>Completed</span>
-        </div>
-        <div class="legend-item">
-            <div class="legend-color" style="background-color: #FFC107;"></div>
-            <span>Ongoing</span>
-        </div>
-        <div class="legend-item">
-            <div class="legend-color" style="background-color: #F44336;"></div>
-            <span>Pending</span>
+    <div class="container">
+        <div id="drawing-container">
+            <img id="drawing-img" src="your-drawing.png" alt="Piling Drawing">
+            <!-- Pile highlights will be added here -->
         </div>
     </div>
-    <div id="map-container">
-        <img id="drawing-background" src="piling-drawing.jpg" alt="Piling Drawing">
-        <!-- Pile markers will be added here dynamically -->
-    </div>
-    <div id="status-summary"></div>
 
-    <!-- Include SheetJS library for parsing Excel data -->
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
